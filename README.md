@@ -3,7 +3,7 @@
 </p>
 
 # Septentrio SUPL-3GPP-LPP-client
-This repository is a fork from the [SUPL-3GPP-LPP-client](https://github.com/Ericsson/SUPL-3GPP-LPP-client) made by Ericsson. It contain additional support for Septentrio GNSS receiver to provide location data information.
+This repository is a fork from the [SUPL-3GPP-LPP-client](https://github.com/Ericsson/SUPL-3GPP-LPP-client) made by Ericsson. It contains additional support for Septentrio GNSS receiver to provide location data information.
 
 ---
 
@@ -14,10 +14,10 @@ The primary goal of this repository is to facilitate the use of the LPP protocol
 ## Getting Started
 To get started with the SUPL-3GPP-LPP-client and a Septentrio receiver, follow the [getting started](getting_started.md) guide.
 
-This guide contain instruction on how to build and use the client as well as instruction on how to setup the receiver and modem.
+This guide contains instruction on how to build and use the client as well as instructions on how to set up the receiver and modem.
 
 ## Tested Setup
-The following setup was tested and is confirm to work with the 3GPP LPP client.
+The following setup was tested and is confirmed to work with the 3GPP LPP client.
 - SBC : Raspberry Pi 4B (OS: Raspberry PI OS 64bit - 2023/05/03)
 - GNSS Receiver : Septentrio Mosaic-Go
 - Modem : D-Link DWM-222 (HW Ver: A2, SW Ver: 2.0.1 EU) 
