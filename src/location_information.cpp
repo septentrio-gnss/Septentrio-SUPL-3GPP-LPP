@@ -1,34 +1,58 @@
 #include "location_information.h"
 #include <modem.h>
+#include <sbf.hpp>
 #include "lpp/location_information.h"
 #include "utility/types.h"
 
-bool provide_location_information_callback(UNUSED LocationInformation& location,
-                                           UNUSED HaGnssMetrics& metrics, UNUSED void* userdata) {
-#if 0
-    // Example implementation
-    location.time      = time(NULL);
-    location.latitude  = 20;
-    location.longitude = 25;
-    location.altitude = 30;
-    location.bearing = 132;
-    location.horizontal_accuracy = 1;
-    location.horizontal_speed = 2;
-    location.horizontal_speed_accuracy = 3;
-    location.vertical_accuracy = 1;
-    location.vertical_speed = 2;
-    location.vertical_speed_accuracy = 3;
-    location.vertical_velocity_direction = VerticalDirection::UP;
+bool provide_location_information_callback(LocationInformation& location, HaGnssMetrics& metrics,
+                                           void* userdata) {
+    auto sbfParse = reinterpret_cast<SBF_parse*>(userdata);
 
-    metrics.fixq = FixQuality::MANUAL_INPUT;
-    metrics.sats = 5;
-    metrics.age = 0;
-    metrics.hdop = 0;
-    metrics.vdop = 0;
-    return true;
-#else
-    return false;
-#endif
+    // check if the parser is currently running
+    if (sbfParse && sbfParse->is_running()) {
+        // get last value from parser
+        auto receiver_info = sbfParse->get_sbf_data();
+
+        // fill the struct with the parser value
+        location.time                      = time(NULL);
+        location.latitude                  = receiver_info.latitude;
+        location.longitude                 = receiver_info.longitude;
+        location.altitude                  = receiver_info.altitude;
+        location.bearing                   = receiver_info.heading;
+        location.horizontal_accuracy       = receiver_info.horizontal_accuracy;
+        location.horizontal_speed          = abs(receiver_info.ve) + abs(receiver_info.vn);
+        location.horizontal_speed_accuracy = receiver_info.cov_vn_vn + receiver_info.cov_ve_ve;
+        location.vertical_accuracy         = receiver_info.vertical_accuracy;
+        location.vertical_speed            = receiver_info.vu;
+        location.vertical_speed_accuracy   = receiver_info.cov_vu_vu;
+
+        if (receiver_info.vu >= 0)
+            location.vertical_velocity_direction = VerticalDirection::UP;
+        else
+            location.vertical_velocity_direction = VerticalDirection::DOWN;
+
+        metrics.sats = receiver_info.nr_sv;
+        metrics.age  = 0;
+        metrics.hdop = receiver_info.hDOP;
+        metrics.pdop = receiver_info.pDOP;
+
+        switch (receiver_info.fixq) {
+        case SBF_FIX::INVALID:
+        default: metrics.fixq = FixQuality::INVALID; break;
+
+        case SBF_FIX::DGPS_FIX: metrics.fixq = FixQuality::DGPS_FIX; break;
+
+        case SBF_FIX::STANDALONE: metrics.fixq = FixQuality::STANDALONE; break;
+
+        case SBF_FIX::RTK_FIX: metrics.fixq = FixQuality::RTK_FIX; break;
+
+        case SBF_FIX::RTK_FLOAT: metrics.fixq = FixQuality::RTK_FLOAT; break;
+        }
+
+        return true;
+    } else {
+        return false;
+    }
 }
 
 bool provide_ecid_callback(ECIDInformation& ecid, void* userdata) {

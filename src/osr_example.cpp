@@ -7,7 +7,9 @@
 #include <stdexcept>
 #include <transmitter/transmitter.h>
 #include "location_information.h"
-
+#include <sbf.hpp>
+#include <iostream>
+#include  <iomanip>
 namespace osr_example {
 
 static CellID                         gCell;
@@ -15,6 +17,7 @@ static std::unique_ptr<Modem_AT>      gModem;
 static Transmitter                    gTransmitter;
 static std::unique_ptr<RTCMGenerator> gGenerator;
 static Format                         gFormat;
+static std::unique_ptr<SBF_parse>     sbfParse;
 
 static void osr_assistance_data_callback(LPP_Client*, LPP_Transaction*, LPP_Message*, void*);
 
@@ -78,7 +81,15 @@ void execute(const LocationServerOptions& location_server_options,
         throw std::runtime_error("No identity provided");
     }
 
-    client.provide_location_information_callback(NULL, provide_location_information_callback);
+    //Init of the sbf parser
+    sbfParse = std::unique_ptr<SBF_parse>(new SBF_parse());
+
+    if (sbfParse->start_receive(output_options.serial->device) != 0)
+    {
+        throw std::runtime_error("Unable to start sbf parser");
+    }
+
+    client.provide_location_information_callback(sbfParse.get(), provide_location_information_callback);
     client.provide_ecid_callback(gModem.get(), provide_ecid_callback);
 
     if (!client.connect(location_server_options.host.c_str(), location_server_options.port,

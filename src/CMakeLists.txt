@@ -2,7 +2,7 @@
 
 add_executable(example "main.cpp" "osr_example.cpp" "ssr_example.cpp" "agnss_example.cpp" "location_information.cpp")
 target_include_directories(example PRIVATE ../include/)
-target_link_libraries(example PRIVATE utility modem rtklib asnlib lpplib osr rtcm_generator Threads::Threads)
+target_link_libraries(example PRIVATE utility modem rtklib asnlib lpplib osr rtcm_generator Threads::Threads septentrio)
 target_link_libraries(example PRIVATE args)
 target_link_libraries(example PRIVATE transmitter)
 
