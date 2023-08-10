@@ -3,6 +3,7 @@
 #include <sbf.hpp>
 #include "lpp/location_information.h"
 #include "utility/types.h"
+#include <cmath>
 
 bool provide_location_information_callback(LocationInformation& location, HaGnssMetrics& metrics,
                                            void* userdata) {
@@ -20,7 +21,7 @@ bool provide_location_information_callback(LocationInformation& location, HaGnss
         location.altitude                  = receiver_info.altitude;
         location.bearing                   = receiver_info.heading;
         location.horizontal_accuracy       = receiver_info.horizontal_accuracy;
-        location.horizontal_speed          = abs(receiver_info.ve) + abs(receiver_info.vn);
+        location.horizontal_speed          = sqrt(pow(receiver_info.ve,2) + pow(receiver_info.vn,2));
         location.horizontal_speed_accuracy = receiver_info.cov_vn_vn + receiver_info.cov_ve_ve;
         location.vertical_accuracy         = receiver_info.vertical_accuracy;
         location.vertical_speed            = receiver_info.vu;
