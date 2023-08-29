@@ -1,5 +1,6 @@
 <p align="center">
   <img width="20%" src="readme_assets/logo_septentrio.jpg">
+  <img width="20%" src="readme_assets/logo_ericsson.jpg">
 </p>
 
 # Septentrio SUPL-3GPP-LPP-client
