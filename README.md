@@ -1,7 +1,7 @@
-<p align="right">
-  <img align="left" width="20%" src="readme_assets/logo_septentrio.jpg">
-  <img align="right "width="20%" src="readme_assets/logo_ericsson.png">
-</p>
+<div align="center">
+  <img  width="20%" src="readme_assets/logo_septentrio.jpg">
+  <img  width="20%" src="readme_assets/logo_ericsson.png">
+</div>
 
 # Septentrio SUPL-3GPP-LPP-client
 This repository is a fork from the [SUPL-3GPP-LPP-client](https://github.com/Ericsson/SUPL-3GPP-LPP-client) made by Ericsson. It contains additional support for Septentrio GNSS receiver to provide location data information.
