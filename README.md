@@ -1,5 +1,7 @@
 <div align="center">
   <img  width="20%" src="readme_assets/logo_septentrio.jpg">
+  <img  width="20%" src="readme_assets/logo_ericsson.png">
+
 </div>
 
 # Septentrio SUPL-3GPP-LPP-client
@@ -32,6 +34,10 @@ The SUPL (Secure User Plane Location) protocol is an IP protocol designed to tra
 ## What is LPP ?
 LTE positioning protocol (LPP) is a point-to-point protocol that allows multiple connections to different devices and is used to position the target device.
 LPP provides support for GNSS based positioning, network based positioning and hybrid – a combination of both GNSS and network based positioning.
+
+## How to buy a Mosaic-GO unit ?
+
+You can buy a Mosaic-GO receiver directly from digikey ([link](https://www.digikey.com/en/products/detail/septentrio-inc/410386/18091779)).
 
 ## Client
 

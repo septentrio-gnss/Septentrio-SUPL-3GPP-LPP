@@ -132,28 +132,36 @@ You should see 4 peripherals :
 >To install the 2.0.1 firmware you will need to use a Windows computer. 
 >Go to http://support.dlink.com.au/Download/download.aspx?product=DWM-222 and download the FW2.0.1 exe. Connect the modem to the computer and execute the downloaded file. A terminal will open, follow the instructions. The update should take approximately 10 minutes.
 
+To set up an internet connection, you can use the WvDial dialer and set up the right parameters for your telecom provider.
 
 ## Step 4 : 3GPP-LPP client usage
 
 The client can be used to provide RTCM OSR corrections to the receiver using the 3GPP LPP protocol over SUPL.
 
-```
-  ./src/example COMMAND {OPTIONS}
+There are a few required arguments:
+- `-h` or `--host` - The host of the location server
+- `-c` or `--mcc` - The Mobile Country Code
+- `-n` or `--mnc` - The Mobile Network Code
+- `-t` or `--tac` - The Tracking Area Code
+- `-i` or `--ci` - The Cell Identity
 
-    SUPL-3GPP-LPP-client v3.2.1 (public)
+
+```
+  ./build/example-lpp COMMAND {OPTIONS}
+
+    Example - LPP Client
 
   OPTIONS:
 
       -?, --help                        Display this help menu
       -v, --version                     Display version information
       Commands:
-        osr                               Request Observation Space
-                                          Representation (OSR) data from the
-                                          location server.
+        osr                               Request observation data from a
+                                          location server
         ssr                               Request State-space Representation
-                                          (SSR) data from the location server.
+                                          (SSR) data from the location server
         agnss                             Request Assisted GNSS data from the
-                                          location server.
+                                          location server
       Location Server:
         -h[host], --host=[host]           Host
         -p[port], --port=[port]           Port
@@ -163,6 +171,7 @@ The client can be used to provide RTCM OSR corrections to the receiver using the
       Identity:
         --msisdn=[msisdn]                 MSISDN
         --imsi=[imsi]                     IMSI
+                                          Default: 2460813579
         --ipv4=[ipv4]                     IPv4
       Cell Information:
         -c[mcc], --mcc=[mcc]              Mobile Country Code
@@ -172,6 +181,37 @@ The client can be used to provide RTCM OSR corrections to the receiver using the
       Modem:
         --modem=[device]                  Device
         --modem-baud=[baud_rate]          Baud Rate
+      u-blox Receiver:
+        --ublox-port=[port]               The port used on the u-blox receiver,
+                                          used by configuration.
+                                          One of: uart1, uart2, i2c, usb
+                                          Default: (by interface)
+        Serial:
+          --ublox-serial=[device]           Device
+          --ublox-serial-baud=[baud_rate]   Baud Rate
+                                            Default: 115200
+          --ublox-serial-data=[data_bits]   Data Bits
+                                            One of: 5, 6, 7, 8
+                                            Default: 8
+          --ublox-serial-stop=[stop_bits]   Stop Bits
+                                            One of: 1, 2
+                                            Default: 1
+          --ublox-serial-parity=[parity_bits]
+                                            Parity Bits
+                                            One of: none, odd, even
+                                            Default: none
+        I2C:
+          --ublox-i2c=[device]              Device
+          --ublox-i2c-address=[address]     Address
+                                            Default: 66
+        TCP:
+          --ublox-tcp=[ip_address]          Host or IP Address
+          --ublox-tcp-port=[port]           Port
+        UDP:
+          --ublox-udp=[ip_address]          Host or IP Address
+          --ublox-udp-port=[port]           Port
+      Septentrio Receiver:
+        --septentrio-serial=[device]      Device
       Output:
         File:
           --file=[file_path]                Path
@@ -179,15 +219,26 @@ The client can be used to provide RTCM OSR corrections to the receiver using the
           --serial=[device]                 Device
           --serial-baud=[baud_rate]         Baud Rate
                                             Default: 115200
+          --serial-data=[data_bits]         Data Bits
+                                            One of: 5, 6, 7, 8
+                                            Default: 8
+          --serial-stop=[stop_bits]         Stop Bits
+                                            One of: 1, 2
+                                            Default: 1
+          --serial-parity=[parity_bits]     Parity Bits
+                                            One of: none, odd, even
+                                            Default: none
         I2C:
           --i2c=[device]                    Device
           --i2c-address=[address]           Address
+                                            Default: 66
         TCP:
-          --tcp=[ip_address]                IP Address
+          --tcp=[ip_address]                Host or IP Address
           --tcp-port=[port]                 Port
         UDP:
-          --udp=[ip_address]                IP Address
+          --udp=[ip_address]                Host or IP Address
           --udp-port=[port]                 Port
         Stdout:
           --stdout                          Stdout
+
 ```
