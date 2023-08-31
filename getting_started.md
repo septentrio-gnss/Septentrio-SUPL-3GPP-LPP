@@ -34,7 +34,7 @@ cmake -S . -B build -G Ninja
 cmake --build build --config Debug
 ```
 
-Once the building is done, the binary is available over 'build/src/example'.
+Once the building is done, the binary is available over the 'build' folder.
 
 ---
 
@@ -132,7 +132,7 @@ You should see 4 peripherals :
 >To install the 2.0.1 firmware you will need to use a Windows computer. 
 >Go to http://support.dlink.com.au/Download/download.aspx?product=DWM-222 and download the FW2.0.1 exe. Connect the modem to the computer and execute the downloaded file. A terminal will open, follow the instructions. The update should take approximately 10 minutes.
 
-To set up an internet connection, you can use the WvDial dialer and set up the right parameters for your telecom provider.
+To set up an internet connection, you can use the WvDial dialer and use the right parameters for your telecom provider.
 
 ## Step 4 : 3GPP-LPP client usage
 
